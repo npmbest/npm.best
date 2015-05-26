@@ -32,7 +32,7 @@ function getLatestVersion (versions) {
 }
 
 function isGithubRepository (url) {
-  return ((url || '').indexOf('github.com') === 0 ? 1 : 0);
+  return ((url || '').indexOf('github.com') !== -1 ? 1 : 0);
 }
 
 timestamp = Date.now();
