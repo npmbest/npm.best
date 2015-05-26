@@ -19,4 +19,12 @@ module.exports = function (ns) {
   // NPM库本地存储名称
   ns('define.npm.registryFileName', 'npm_packages.json');
   
+  // MySQL配置
+  ns('mysql.host', 'localhost');
+  ns('mysql.port', 3306);
+  ns('mysql.database', '');
+  ns('mysql.user', 'root');
+  ns('mysql.password', '');
+  ns('mysql.pool', 10);
+  
 };
