@@ -4,11 +4,10 @@
  * @author Zongmin Lei <leizongmin@gmail.com>
  */
 
-var rd = require('rd');
 var config = require('../../config');
 var utils = require('../../lib/utils');
 var middleware = require('../middleware');
-var debug = utils.debug('routes');
+var debug = utils.debug('routes:home');
 
 
 module.exports = function (app) {

@@ -31,4 +31,7 @@ module.exports = function (ns) {
   ns('mysql.password', '');
   ns('mysql.pool', 10);
   
+  // 默认API查询返回结果数量
+  ns('define.query.limit', 50);
+  
 };

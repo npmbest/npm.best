@@ -17,6 +17,7 @@ var cookieParser = require('cookie-parser');
 var app = express();
 app.use('/assets', serveStatic(path.resolve(__dirname, 'assets')));
 app.use(cookieParser(config.get('web.cookie.secret')));
+app.use(middleware.apiUtils);
 
 
 require('./routes')(app);
