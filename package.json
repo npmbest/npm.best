@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/npmlink/npm.link",
   "dependencies": {
+    "JSONStream": "^1.0.4",
     "async": "^1.0.0",
     "body-parser": "^1.12.4",
     "connect": "^3.3.5",

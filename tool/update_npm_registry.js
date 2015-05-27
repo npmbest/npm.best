@@ -14,13 +14,6 @@ var async = require('async');
 
 var file = path.resolve(config.get('path.data'), config.get('define.npm.registryFileName'));
 console.log('load package list...');
-var timestamp = Date.now();
-var data = JSON.parse(fs.readFileSync(file).toString());
-delete data._updated;
-var list = Object.keys(data).map(function (n) {
-  return data[n];
-});
-console.log('total %s packages, spent %sms', list.length, Date.now() - timestamp);
 
 function getLatestVersion (versions) {
   for (var i in versions) {
@@ -35,12 +28,38 @@ function isGithubRepository (url) {
   return ((url || '').indexOf('github.com') !== -1 ? 1 : 0);
 }
 
-timestamp = Date.now();
+var timestamp = Date.now();
 var counter = 0;
-async.eachSeries(list, function (item, next) {
+
+var JSONStream = require('JSONStream');
+var jsonStream = JSONStream.parse('*');
+var fileStream = fs.createReadStream(file);
+fileStream.pipe(jsonStream);
+var list = [];
+var isEnd = false;
+jsonStream.on('data', function (data) {
+  list.push(data);
+  if (list.length >= 1) {
+    fileStream.pause();
+  }
+  onItem(list.shift(), function () {
+    if (list.length <= 0) {
+      if (isEnd) {
+        onEnd();
+      } else {
+        fileStream.resume();
+      }
+    }
+  });
+});
+jsonStream.on('end', function () {
+  isEnd = true;
+});
+
+function onItem (item, next) {
   
   counter++;
-  console.log('update package %s (%s/%s, %s%%)', item.name, counter, list.length, (counter / list.length * 100).toFixed(2));
+  console.log('update package %s (%s)', item.name, counter);
   async.series([
     function (next) {
       
@@ -108,8 +127,10 @@ async.eachSeries(list, function (item, next) {
     next();
   });
   
-}, function (err) {
+}
+
+function onEnd (err) {
   if (err) console.log(err);
   console.log('done. spent %sms', Date.now() - timestamp);
   process.exit();
-});
+}
