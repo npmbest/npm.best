@@ -86,7 +86,7 @@ model.packages.find({is_github: 1}, {fields: 'name,repository'}, function (err, 
         
         model.packages.update({name: item.name}, {
           star_count: info.stargazers_count,
-          watch_count: info.watchers_count,
+          watch_count: info.subscribers_count,
           fork_count: info.forks_count
         }, next);
         
