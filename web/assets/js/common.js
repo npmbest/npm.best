@@ -24,7 +24,7 @@
       dataType: 'json',
       success: function (data) {
         if (data.status !== 'OK') return callback(data.error_message, data);
-        callback(null, data.data, data);
+        callback(null, data.result, data);
       },
       error:  function (req, status, err) {
         callback(status + ' ' + err);
@@ -54,5 +54,24 @@
       return swal(options, callback);
     };
   });
+  
+  // TinyLiquid
+  var templateContext = TinyLiquid.newContext();
+  function compileTemplate (fn, options) {
+    var lines = fn.toString().split('\n');
+    var tpl = lines.slice(1, -1).join('\n').trim();
+    var render = TinyLiquid.compile(tpl, options);
+    return function (data, callback) {
+      var context = TinyLiquid.newContext();
+      for (var i in data) {
+        context.setLocals(i, data[i]);
+      }
+      context.from(templateContext);
+      render(context, callback);
+    };
+  }
+  
+  window.templateContext = templateContext;
+  window.compileTemplate = compileTemplate;
 
 })();
