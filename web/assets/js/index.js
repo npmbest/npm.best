@@ -2,11 +2,13 @@ $(document).ready(function () {
   
   // 数据缓存
   var cache = new SuperCache({
-    store: new SuperCache.MemoryStore({
+    store: new SuperCache.LocalStore({
+      type: 'local',
+      prefix: 'npmlink_',
       max: 1000,
-      gcProbability: 0.01 
+      gcProbability: 0.01
     }),
-    ttl: 60
+    ttl: 600
   });
   
   // 查询指定关键字的模块名
