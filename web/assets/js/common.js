@@ -60,15 +60,22 @@
   function compileTemplate (fn, options) {
     var lines = fn.toString().split('\n');
     var tpl = lines.slice(1, -1).join('\n').trim();
-    var render = TinyLiquid.compile(tpl, options);
-    return function (data, callback) {
+    var renderTpl = TinyLiquid.compile(tpl, options);
+    var render = function (data, callback) {
       var context = TinyLiquid.newContext();
       for (var i in data) {
         context.setLocals(i, data[i]);
       }
       context.from(templateContext);
-      render(context, callback);
+      renderTpl(context, callback);
     };
+    render.to = function (target, data) {
+      render(data, function (err, html) {
+        if (err) return messageBox.error(err);
+        $(target).html(html);
+      });
+    };
+    return render;
   }
   
   window.templateContext = templateContext;
