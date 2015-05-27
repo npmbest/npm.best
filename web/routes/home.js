@@ -13,7 +13,7 @@ var debug = utils.debug('routes:home');
 module.exports = function (app) {
   
   app.get('/', function (req, res, next) {
-    res.end('Hello, npm.link');
+    res.render('index');
   });
 
 };

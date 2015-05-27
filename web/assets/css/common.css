@@ -1,0 +1,15 @@
+.ajax-loader {
+  height: 100px;
+  width: 100px;
+  text-align: center;
+  position: fixed;
+  left: 50%;
+  margin-left: -50px;
+  top: 60px;
+  z-index: 1001;
+  display: none;
+}
+.ajax-loader img {
+  border: 0;
+  max-width: 100%;
+}
