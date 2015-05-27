@@ -82,10 +82,21 @@ $(document).ready(function () {
   
   // 显示模块列表
   function showPackagesPage (query, skip, limit) {
+    query = query.trim().replace(/[^a-zA-Z.\-_$]/g, '');
     queryPackages(query, skip, limit, function (err, ret) {
       if (err) return messageBox.error(err);
-      renderTplPackages.to('#packages', ret);
+      renderTplPackages.to('#packages', ret, function () {
+        $('#packages .highlight-keyword').each(function () {
+          var $me = $(this);
+          $me.html(highlightKeyword(query, $me.html()));
+        });
+      });
     });
+  }
+  
+  function highlightKeyword (keyword, html) {
+    if (!keyword) return html;
+    return html.replace(new RegExp(keyword, 'g'), '<span class="keyword">' + keyword + '</span>');
   }
   
   //--------------------------------------------------------------------
@@ -94,5 +105,9 @@ $(document).ready(function () {
     var $me = $(this);
     showPackagesPage($me.data('query'), $me.data('skip'), $me.data('limit'));
   });
+  
+  //--------------------------------------------------------------------
+  
+  $('#start-search').click();
 
 });

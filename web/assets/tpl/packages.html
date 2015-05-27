@@ -1,6 +1,6 @@
 var renderTplPackages = compileTemplate(function () {/*
 
-<h3 class="text-center">{{count|escape}} results for "{{query|escape}}"</h3>
+<h3 class="text-center">{{count|escape}} results {% if query %}for "{{query|escape}}"{% endif %}</h3>
 <table class="table table-hover">
   <tr>
     <th width="200">Name</th>
@@ -14,10 +14,13 @@ var renderTplPackages = compileTemplate(function () {/*
   </tr>
   {% for item in list %}
   <tr>
-    <td><strong>{{item.name|escape}}</strong></td>
+    <td><strong class="highlight-keyword">{{item.name|escape}}</strong></td>
     <td>{{item.modified|date:'%Y-%m-%d'|escape}}</td>
     <td>{{item.author_name|escape}}</td>
-    <td>{{item.description|escape}}</td>
+    <td>
+      <span class="highlight-keyword">{{item.description|escape}}</span><br>
+      <span class="text-muted highlight-keyword">{{item.keywords|escape}}</span>
+    </td>
     <td>{{item.fork_count|escape}}</td>
     <td>{{item.star_count|escape}}</td>
     <td>{{item.watch_count|escape}}</td>

@@ -32,3 +32,8 @@ td {
 #packages {
   min-height: 300px;
 }
+
+.keyword {
+  color: blue;
+  font-weight: bold;
+}
