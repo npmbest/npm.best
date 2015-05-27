@@ -23,9 +23,9 @@ var renderTplPackages = compileTemplate(function () {/*
     <td>{{item.watch_count|escape}}</td>
     <td>
       <a href="https://npmjs.com/package/{{item.name|escape}}" target="_blank">NPM</a>
-      <a href="{{item.homepage|escape}}" target="_blank">Home</a>
-      <a href="{{item.repository|escape}}" target="_blank">Repo</a>
-      <a href="{{item.bugs|escape}}" target="_blank">Issues</a>
+      {% if item.homepage %}<a href="{{item.homepage|escape}}" target="_blank">Home</a>{% endif %}
+      {% if item.repository %}<a href="{{item.repository|escape}}" target="_blank">Repo</a>{% endif %}
+      {% if item.bugs %}<a href="{{item.bugs|escape}}" target="_blank">Issues</a>{% endif %}
     </td>
   </tr>
   {% endfor %}
