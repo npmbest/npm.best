@@ -45,4 +45,7 @@ module.exports = function (ns) {
   ns('cache.api.redis.prefix', 'cache:api:');
   ns('cache.api.redis.auth_pass', undefined);
   
+  // GitHub授权
+  ns('github.authorization', '');
+  
 };

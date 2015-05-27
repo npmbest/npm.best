@@ -46,7 +46,8 @@ model.packages.find({is_github: 1}, {fields: 'name,repository'}, function (err, 
         request({
           url: 'https://api.github.com/repos/' + repo,
           headers: {
-            'user-agent': 'npm.link'
+            'user-agent': 'npm.link',
+            'authorization': config.get('github.authorization')
           }
         }, function (err, res, body) {
           if (body) {
@@ -57,6 +58,7 @@ model.packages.find({is_github: 1}, {fields: 'name,repository'}, function (err, 
               return next(err);
             }
           }
+          if (info.message) err = new Error(info.message);
           next(err);
         });
         
