@@ -9,10 +9,12 @@
   function ajaxDone () {
     $('.ajax-loader').hide();
   }
-  $(document).ajaxStart(ajaxLoading)
-             .ajaxStop(ajaxDone)
-             .ajaxError(ajaxDone);
-  $(document.body).append('<div class="ajax-loader"><img src="' + ajaxLoaderImg + '"></div>');
+  $(document).ready(function () {
+    $(document).ajaxStart(ajaxLoading)
+               .ajaxStop(ajaxDone)
+               .ajaxError(ajaxDone);
+    $(document.body).append('<div class="ajax-loader"><img src="' + ajaxLoaderImg + '"></div>');
+  });
 
   // AJAX Request
   function makeAjaxRequest (method, url, params, callback) {
