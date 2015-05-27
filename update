@@ -1,0 +1,6 @@
+#!/bin/sh
+# up to date
+
+git reset --hard
+git pull origin HEAD
+npm install
