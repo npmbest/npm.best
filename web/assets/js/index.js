@@ -82,13 +82,16 @@ $(document).ready(function () {
   
   // 显示模块列表
   function showPackagesPage (query, skip, limit) {
-    query = query.trim().replace(/[^a-zA-Z.\-_$]/g, '');
+    query = query.trim().replace(/[^a-zA-Z.\-_$+]/g, '');
     queryPackages(query, skip, limit, function (err, ret) {
       if (err) return messageBox.error(err);
+      var keywords = query.split('+');
       renderTplPackages.to('#packages', ret, function () {
         $('#packages .highlight-keyword').each(function () {
           var $me = $(this);
-          $me.html(highlightKeyword(query, $me.html()));
+          keywords.forEach(function (w) {
+            $me.html(highlightKeyword(w.trim(), $me.html()));
+          });
         });
       });
     });
