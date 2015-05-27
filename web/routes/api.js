@@ -30,7 +30,7 @@ module.exports = function (app) {
     async.series([
       function (next) {
         
-        model.packages.listNameBySearchName(type, query, {
+        model.packages.findNameBySearchName(type, query, {
           skip: skip,
           limit: limit
         }, function (err, ret) {
