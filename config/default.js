@@ -34,4 +34,7 @@ module.exports = function (ns) {
   // 默认API查询返回结果数量
   ns('define.query.limit', 50);
   
+  // assets/lib CDN地址
+  ns('cdn.assets.lib', '');
+  
 };

@@ -16,5 +16,11 @@ var context = exports.context = expressLiquid.newContext();
 
 
 context.setFilter('asset_url', function (url) {
+  if (url.indexOf('/assets/lib/') === 0) {
+    var cdn = config.get('cdn.assets.lib');
+    if (cdn) {
+      return cdn + url;
+    }
+  }
   return url;
 });
