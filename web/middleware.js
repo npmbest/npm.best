@@ -21,9 +21,13 @@ post.use(bodyParser.urlencoded({extended: true}));
 
 
 exports.apiUtils = function (req, res, next) {
+  
+  req.timestamp = Date.now();
+  
   // 输出数据
   function output (data) {
-
+    // 请求处理时间
+    data.spent = Date.now() - req.timestamp;
     // 取得请求的数据格式
     var type = path.extname(parseUrl(req.url).pathname);
     switch (type) {
