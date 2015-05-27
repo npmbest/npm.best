@@ -9,9 +9,11 @@ var parseUrl = require('url').parse;
 var config = require('../config');
 var utils = require('../lib/utils');
 var model = require('../lib/model');
+var cache = require('../lib/cache');
 var multipart = require('connect-multiparty');
 var bodyParser = require('body-parser');
 var connect = require('connect');
+var debug = utils.debug('middleware');
 
 
 var post = exports.post = connect();
@@ -57,4 +59,41 @@ exports.apiUtils = function (req, res, next) {
   };
 
   next();
+};
+
+exports.cache = function (req, res, next) {
+  if (req.method !== 'GET') return next();
+  var key = req.method + ' ' + req.url;
+  cache.get(key, function (err, callback) {
+    debug('cache not exist: %s', key);
+    var body = [];
+    res._npmlink_write = res.write;
+    res._npmlink_end = res.end;
+    res.write = function (c) {
+      body.push(c);
+      res._npmlink_write.apply(res, arguments);
+    };
+    res.end = function (c) {
+      if (c) body.push(c);
+      res._npmlink_end.apply(res, arguments);
+    };
+    res.on('finish', function () {
+      if (res.statusCode !== 200) return;
+      var save = {
+        status: res.statusCode,
+        headers: res._headers,
+        body: Buffer.concat(body).toString()
+      };
+      debug('save cache: %s', key);
+      cache.set(key, save);
+    });
+    callback(null, '');
+  }, function (err, ret) {
+    if (err) return next(err);
+    if (!ret) return next();
+    
+    debug('from cache: %s', key);
+    res.writeHead(ret.status, ret.headers);
+    res.end(ret.body);
+  });
 };

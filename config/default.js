@@ -37,4 +37,12 @@ module.exports = function (ns) {
   // assets/lib CDN地址
   ns('cdn.assets.lib', '');
   
+  // API Cache
+  ns('cache.api.redis.ttl', 3600);
+  ns('cache.api.redis.host', '127.0.0.1');
+  ns('cache.api.redis.port', 6379);
+  ns('cache.api.redis.db', 0);
+  ns('cache.api.redis.prefix', 'cache:api:');
+  ns('cache.api.redis.auth_pass', undefined);
+  
 };

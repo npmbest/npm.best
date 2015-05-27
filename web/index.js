@@ -28,6 +28,7 @@ app.engine('html', expressLiquid({
 app.use(expressLiquid.middleware);
 
 
+app.use('/api', middleware.cache);
 require('./routes')(app);
 
 
