@@ -74,7 +74,7 @@ module.exports = function (app) {
     async.series([
       function (next) {
         
-        model.packages.find({}, {
+        model.packages.findBestBySearch(query, {
           skip: skip,
           limit: limit
         }, function (err, ret) {
@@ -85,7 +85,7 @@ module.exports = function (app) {
       },
       function (next) {
         
-        model.packages.count({}, function (err, ret) {
+        model.packages.countBestBySearch(query, function (err, ret) {
           share.count = ret;
           next(err);
         });
