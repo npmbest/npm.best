@@ -51,7 +51,7 @@ model.packages.find({is_github: 1}, {fields: 'name,repository'}, function (err, 
         }, function (err, res, body) {
           if (body) {
             try {
-              json = body.toString();console.log(json);
+              json = body.toString();
               info = JSON.parse(json);
             } catch (err) {
               return next(err);
