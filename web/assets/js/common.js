@@ -69,10 +69,11 @@
       context.from(templateContext);
       renderTpl(context, callback);
     };
-    render.to = function (target, data) {
+    render.to = function (target, data, callback) {
       render(data, function (err, html) {
         if (err) return messageBox.error(err);
         $(target).html(html);
+        callback && callback();
       });
     };
     return render;

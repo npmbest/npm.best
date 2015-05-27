@@ -1,0 +1,27 @@
+#search-names {
+  position: absolute;
+  top: 34px;
+  left: 0;
+  z-index: 999;
+  width: 200px;
+  background-color: #fff;
+}
+#search-names .list-group {
+  box-shadow: 1px 2px 5px #666;
+  border-radius: 0;
+}
+#search-names .list-group-item {
+  background-color: #fff;
+  height: 37px;
+  overflow: hidden;
+  word-break: break-all;
+  border-radius: 0 !important;
+}
+#search-names .list-group-item:hover {
+  cursor: pointer;
+  font-weight: bold;
+  background-color: #eee;
+}
+#packages {
+  min-height: 300px;
+}

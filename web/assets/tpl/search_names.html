@@ -1,0 +1,10 @@
+var renderTplSearchNames = compileTemplate(function () {/*
+  
+<ul class="list-group">
+  {% for item in list %}
+  <li class="list-group-item">{{item|escape}}</li>
+  {% endfor %}
+</ul>
+<p>about {{count|escape}} packages</p>
+
+*/});
