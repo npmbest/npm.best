@@ -1,0 +1,9 @@
+#!/bin/sh
+# delpoy and run on server
+
+git reset --hard
+git pull origin HEAD
+npm install
+
+pm2 stop npm.link -f
+pm2 start web/app.js -n npm.link
