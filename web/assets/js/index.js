@@ -46,9 +46,17 @@ $(document).ready(function () {
     var query = $(this).val().trim();
     queryPackageNames(query, function (ret) {
       renderTplSearchNames.to('#search-names', ret, function () {
+        clearTimeout(iptSearchTid);
         $('#search-names').show();
       });
     });
+  });
+  var iptSearchTid;
+  $('#ipt-search').focusout(function () {
+    clearTimeout(iptSearchTid);
+    iptSearchTid = setTimeout(function () {
+      $('#search-names').hide();
+    }, 200);
   });
   
   // 选择提示名称的列表项
