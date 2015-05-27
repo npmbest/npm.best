@@ -32,24 +32,33 @@ $(document).ready(function () {
     });
   }
   
-  //--------------------------------------------------------------------
-  
-  ajaxRequest.get('/api/search.json', {query: ''}, function (err, ret) {
-    if (err) return messageBox.error(err);
-    renderTplPackages.to('#packages', ret);
-  });
+  // 查询指定关键字的模块列表
+  function queryPackages (query, skip, limit, callback) {
+    cache.get('packages_' + query + '_' + skip + '_' + limit, function (name, callback) {
+      ajaxRequest.get('/api/search.json', {
+        query: query,
+        skip: skip,
+        limit: limit
+      }, callback);
+    }, callback);
+  }
   
   //--------------------------------------------------------------------
   
   // 顶栏搜索框
-  $('#ipt-search').keyup(function () {
-    var query = $(this).val().trim();
-    queryPackageNames(query, function (ret) {
-      renderTplSearchNames.to('#search-names', ret, function () {
-        clearTimeout(iptSearchTid);
-        $('#search-names').show();
+  $('#ipt-search').keyup(function (e) {
+    var c = e.keyCode || e.charCode || e.which;
+    if (c === 13) {
+      $('#start-search').click();
+    } else {
+      var query = $(this).val().trim();
+      queryPackageNames(query, function (ret) {
+        renderTplSearchNames.to('#search-names', ret, function () {
+          clearTimeout(iptSearchTid);
+          $('#search-names').show();
+        });
       });
-    });
+    }
   });
   var iptSearchTid;
   $('#ipt-search').focusout(function () {
@@ -68,6 +77,22 @@ $(document).ready(function () {
   // 开始搜索
   $('#start-search').click(function () {
     $('#search-names').hide();
+    showPackagesPage($('#ipt-search').val(), 0, 50);
+  });
+  
+  // 显示模块列表
+  function showPackagesPage (query, skip, limit) {
+    queryPackages(query, skip, limit, function (err, ret) {
+      if (err) return messageBox.error(err);
+      renderTplPackages.to('#packages', ret);
+    });
+  }
+  
+  //--------------------------------------------------------------------
+  
+  $('body').delegate('.show-packages-page', 'click', function () {
+    var $me = $(this);
+    showPackagesPage($me.data('query'), $me.data('skip'), $me.data('limit'));
   });
 
 });

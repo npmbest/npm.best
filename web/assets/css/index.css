@@ -1,3 +1,10 @@
+td {
+  word-break: break-all;
+}
+#start-search {
+  border: none;
+  background: none;
+}
 #search-names {
   position: absolute;
   top: 34px;
