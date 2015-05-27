@@ -35,31 +35,43 @@ var JSONStream = require('JSONStream');
 var jsonStream = JSONStream.parse('*');
 var fileStream = fs.createReadStream(file);
 fileStream.pipe(jsonStream);
-var list = [];
 var isEnd = false;
+var pending = 0;
+var list = [];
 jsonStream.on('data', function (data) {
+  fileStream.pause();
   list.push(data);
-  if (list.length >= 1) {
-    fileStream.pause();
-  }
-  onItem(list.shift(), function () {
-    if (list.length <= 0) {
-      if (isEnd) {
-        onEnd();
-      } else {
-        fileStream.resume();
-      }
-    }
-  });
+  updateNextItem();
 });
 jsonStream.on('end', function () {
   isEnd = true;
+  updateNextItem();
 });
+
+var isPending = false;
+function updateNextItem () {
+  if (isPending) return;
+  if (list.length < 1) {
+    if (isEnd) {
+      onEnd();
+    } else {
+      fileStream.resume();
+    }
+  } else {
+    isPending = true;
+    var item = list.shift();
+    onItem(item, function () {
+      isPending = false;
+      process.nextTick(updateNextItem);
+    });
+  }
+}
 
 function onItem (item, next) {
   
   counter++;
-  console.log('update package %s (%s)', item.name, counter);
+  pending++;
+  console.log('[%s] update package %s', counter, item.name);
   async.series([
     function (next) {
       
@@ -97,6 +109,9 @@ function onItem (item, next) {
           author_name: (item.author && item.author.name) || '',
           author_email: (item.author && item.author.email) || ''
         };
+        for (var i in data) {
+          data[i] = String(data[i]);
+        }
         if (ret) {
           model.packages.update({name: item.name}, data, next);
         } else {
