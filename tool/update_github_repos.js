@@ -59,6 +59,7 @@ model.packages.find({is_github: 1}, {fields: 'name,repository'}, function (err, 
             }
           }
           if (info.message) err = new Error(info.message);
+          else if (!info.id) err = new Error('fail to get repo id');
           next(err);
         });
         
@@ -69,7 +70,7 @@ model.packages.find({is_github: 1}, {fields: 'name,repository'}, function (err, 
           if (err) return next(err);
           if (ret) {
             model.github_repos.update({name: item.name}, {
-              json_data: JSON.stringify(item),
+              json_data: json,
               updated: new Date()
             }, next);
           } else {
