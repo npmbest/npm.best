@@ -3,7 +3,7 @@ https://npm.best
 
 ## Development
 
-1. Install
+### Install
 
 ```bash
 git clone https://github.com/npmbest/npm.best.git
@@ -11,7 +11,7 @@ cd npm.best
 npm install
 ```
 
-2. Configure
+### Configure
 
 ```bash
 cp config/default.js config/development.js
@@ -19,19 +19,19 @@ cp config/default.js config/development.js
 
 edit file `config/development.js`
 
-3. Run
+### Run
 
 ```bash
 ./run_development web
 ```
 
-4. Run on server
+### Run on server
 
 ```bash
 ./deploy
 ```
 
-5. Run tools
+### Run tools
 
 on development environment:
 
