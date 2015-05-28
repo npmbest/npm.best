@@ -21,7 +21,9 @@ function getGitRepoNameFromUrl (url) {
 
 
 var timestamp = Date.now();
-model.packages.find({is_github: 1}, {fields: 'name,repository'}, function (err, list) {
+var DAY = 2;
+var sql = 'SELECT `name`,`repository` FROM `packages` WHERE `is_github`=1 AND `name` NOT IN (SELECT `name` FROM `github_repos` WHERE `updated`>date_sub(curdate(),INTERVAL ' + DAY + ' DAY))';
+model._connection.query(sql, function (err, list) {
   if (err) throw err;
   
   console.log('find %s github packages, spent %sms', list.length, Date.now() - timestamp);
