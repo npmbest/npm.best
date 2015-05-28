@@ -1,0 +1,4 @@
+#!/bin/sh
+# run on background
+
+nohup node $1 > background.log &
