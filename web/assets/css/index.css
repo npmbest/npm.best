@@ -1,3 +1,6 @@
+a {
+  cursor: pointer;
+}
 #start-search {
   border: none;
   background: none;
@@ -37,7 +40,7 @@
   margin-bottom: 0;
 }
 #packages .keyword {
-  color: blue;
+  background-color: #FFFFE2;
   font-weight: bold;
 }
 #packages .number {

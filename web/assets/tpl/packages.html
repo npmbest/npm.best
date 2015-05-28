@@ -8,18 +8,20 @@ var renderTplPackages = compileTemplate(function () {/*
   {% for item in list %}
   <li class="list-group-item">
     <h3>
-      <span class="highlight-keyword">{{item.name|escape}}</span>
+      <a class="highlight-keyword" href="https://npmjs.com/package/{{item.name|escape}}" target="_blank">{{item.name|escape}}</a>
       {% if item.author_name %}<small>by {{item.author_name|escape}} {% if item.author_email %}&lt;{{item.author_email|escape}}&gt;{% endif %}</small>{% endif %}
     </h3>
     <div class="row">
       <div class="col-md-8">
         <p class="highlight-keyword">{{item.description|escape}}</p>
+        {% if item.keywords %}
         <p class="text-muted">Keywords: 
           {% assign keywords = item.keywords|split:',' %}
           {% for keyword in keywords %}
           <a class="text-muted highlight-keyword" href="#!{{keyword|escape}}">{{keyword|escape}}</a>{% unless forloop.last %}, {% endunless %}
           {% endfor %}
         </p>
+        {% endif %}
         <p>
           <span>Forks: <span class="number">{{item.fork_count|escape}}</span></span>,
           <span>Stargazers: <span class="number">{{item.star_count|escape}}</span></span>,
@@ -46,14 +48,14 @@ var renderTplPackages = compileTemplate(function () {/*
     {% assign skip_previous = skip|minus:limit %}
     {% assign skip_next = skip|plus:limit %}
     {% if skip_previous > 0 %}
-    <li><a href="#" class="show-packages-page" data-query="{{query|escape}}" data-skip="{{skip_previous|escape}}" data-limit="{{limit|escape}}">Previous</a></li>
+    <li><a class="show-packages-page" data-query="{{query|escape}}" data-skip="{{skip_previous|escape}}" data-limit="{{limit|escape}}">Previous</a></li>
     {% else %}
-    <li class="disabled"><a href="#">Previous</a></li>
+    <li class="disabled"><a>Previous</a></li>
     {% endif %}
     {% if skip < count %}
-    <li><a href="#" class="show-packages-page" data-query="{{query|escape}}" data-skip="{{skip_next|escape}}" data-limit="{{limit|escape}}">Next</a></li>
+    <li><a class="show-packages-page" data-query="{{query|escape}}" data-skip="{{skip_next|escape}}" data-limit="{{limit|escape}}">Next</a></li>
     {% else %}
-    <li class="disabled"><a href="#">Next</a></li>
+    <li class="disabled"><a>Next</a></li>
     {% endif %}
   </ul>
 </nav>

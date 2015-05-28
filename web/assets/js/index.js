@@ -6,6 +6,11 @@ $(document).ready(function () {
   
   //--------------------------------------------------------------------
   
+  var DEFINE_KEYWORD_SUGGESTION_LIMIT = 5;
+  var DEFINE_PACKAGE_RESULT_LIMT = 10;
+  
+  //--------------------------------------------------------------------
+  
   // 数据缓存
   var cache = new SuperCache({
     store: new SuperCache.LocalStore({
@@ -23,7 +28,7 @@ $(document).ready(function () {
       ajaxRequest.get('/api/package/names', {
         type: 'start',
         query: query,
-        limit: 5
+        limit: DEFINE_KEYWORD_SUGGESTION_LIMIT
       }, function (err, ret) {
         if (err) {
           console.error(err);
@@ -107,6 +112,9 @@ $(document).ready(function () {
             $me.html(highlightKeyword(w.trim(), $me.html()));
           });
         });
+        $('body').animate({
+          scrollTop: 0
+        }, 500);
       });
     });
   }
@@ -128,16 +136,16 @@ $(document).ready(function () {
   window.onhashchange = function () {
     var hash = location.hash.toString();
     if (hash.indexOf('#!') === 0) {
-      showPackagesPage(hash.slice(2), 0, 20);
+      showPackagesPage(hash.slice(2), 0, DEFINE_PACKAGE_RESULT_LIMT);
     }
   };
   (function () {
     var hash = location.hash.toString();
     if (hash.indexOf('#!') === 0) {
       var query = hash.slice(2);
-      showPackagesPage(query, 0, 20);
+      showPackagesPage(query, 0, DEFINE_PACKAGE_RESULT_LIMT);
     } else {
-      showPackagesPage('', 0, 20);
+      showPackagesPage('', 0, DEFINE_PACKAGE_RESULT_LIMT);
     }
   })();
 
