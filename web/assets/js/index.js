@@ -90,12 +90,13 @@ $(document).ready(function () {
   // 开始搜索
   $('#start-search').click(function () {
     $('#search-names').hide();
-    showPackagesPage($('#ipt-search').val(), 0, 20);
+    location.hash = '!' + $('#ipt-search').val();
   });
   
   // 显示模块列表
   function showPackagesPage (query, skip, limit) {
     query = query.trim().replace(/[^a-zA-Z.\-_$+ ]/g, '').replace(/\s/, '+');
+    $('#ipt-search').val(query);
     queryPackages(query, skip, limit, function (err, ret) {
       if (err) return messageBox.error(err);
       var keywords = query.split('+');
@@ -112,7 +113,7 @@ $(document).ready(function () {
   
   function highlightKeyword (keyword, html) {
     if (!keyword) return html;
-    return html.replace(new RegExp(keyword, 'g'), '<span class="keyword">' + keyword + '</span>');
+    return html.replace(new RegExp(keyword, 'ig'), '<span class="keyword">' + keyword + '</span>');
   }
   
   //--------------------------------------------------------------------
@@ -124,6 +125,20 @@ $(document).ready(function () {
   
   //--------------------------------------------------------------------
   
-  $('#start-search').click();
+  window.onhashchange = function () {
+    var hash = location.hash.toString();
+    if (hash.indexOf('#!') === 0) {
+      showPackagesPage(hash.slice(2), 0, 20);
+    }
+  };
+  (function () {
+    var hash = location.hash.toString();
+    if (hash.indexOf('#!') === 0) {
+      var query = hash.slice(2);
+      showPackagesPage(query, 0, 20);
+    } else {
+      showPackagesPage('', 0, 20);
+    }
+  })();
 
 });
