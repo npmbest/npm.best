@@ -55,12 +55,12 @@ var renderTplPackages = compileTemplate(function () {/*
   <ul class="pager">
     {% assign skip_previous = skip|minus:limit %}
     {% assign skip_next = skip|plus:limit %}
-    {% if skip_previous > 0 %}
+    {% if skip_previous >= 0 %}
     <li><a class="show-packages-page" data-query="{{query|escape}}" data-skip="{{skip_previous|escape}}" data-limit="{{limit|escape}}">Previous</a></li>
     {% else %}
     <li class="disabled"><a>Previous</a></li>
     {% endif %}
-    {% if skip < count %}
+    {% if skip_next < count %}
     <li><a class="show-packages-page" data-query="{{query|escape}}" data-skip="{{skip_next|escape}}" data-limit="{{limit|escape}}">Next</a></li>
     {% else %}
     <li class="disabled"><a>Next</a></li>
