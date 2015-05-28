@@ -38,6 +38,7 @@ a {
 }
 #packages p, #packages h3 {
   margin-bottom: 0;
+  font-weight: normal;
 }
 #packages .keyword {
   background-color: #FFFFE2;

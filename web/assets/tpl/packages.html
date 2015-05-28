@@ -8,7 +8,7 @@ var renderTplPackages = compileTemplate(function () {/*
   {% for item in list %}
   <li class="list-group-item">
     <h3>
-      <a class="highlight-keyword" href="https://npmjs.com/package/{{item.name|escape}}" target="_blank">{{item.name|escape}}</a>
+      <a href="https://npmjs.com/package/{{item.name|escape}}" target="_blank">{{item.name|escape}}</a>
       {% if item.author_name %}<small>by {{item.author_name|escape}} {% if item.author_email %}&lt;{{item.author_email|escape}}&gt;{% endif %}</small>{% endif %}
     </h3>
     <div class="row">
@@ -30,8 +30,8 @@ var renderTplPackages = compileTemplate(function () {/*
         <p>
           Links:
           <a href="https://npmjs.com/package/{{item.name|escape}}" target="_blank">NPM</a> -
-          {% if item.homepage %}<a href="{{item.homepage|escape}}" target="_blank">Home</a> - {% endif %}
-          {% if item.repository %}<a href="{{item.repository|escape}}" target="_blank">Repo</a> - {% endif %}
+          {% if item.homepage %}<a href="{{item.homepage|escape}}" target="_blank">HomePage</a> - {% endif %}
+          {% if item.repository %}<a href="{{item.repository|escape}}" target="_blank">GitHub</a> - {% endif %}
           {% if item.bugs %}<a href="{{item.bugs|escape}}" target="_blank">Issues</a>{% endif %}
         </p>
       </div>
@@ -39,7 +39,11 @@ var renderTplPackages = compileTemplate(function () {/*
         
       </div>
     </div>
-    <p class="text-muted">Latest version: {{item.latest_version|escape}}, updated at {{item.modified|date:'%Y-%m-%d %H:%M'|escape}}</p>
+    <p class="text-muted">
+      Latest version: {{item.latest_version|escape}},
+      updated at {{item.modified|date:'%Y-%m-%d %H:%M'|escape}}
+      {% if item.license %}, License: {{item.license|escape}}{% endif %}
+    </p>
   </li>
   {% endfor %}
 </ul>
