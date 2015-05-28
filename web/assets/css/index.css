@@ -66,16 +66,21 @@ a {
   padding-left: 0;
   padding-right: 0;
 }
-footer {
+.page-footer {
   background-color: #F2F2F2;
   padding: 18px 0;
   margin-top: 20px;
   color: #AAA;
   border: 1px solid rgba(0, 0, 0, 0);
 }
-footer a {
+.page-footer a {
   color: #777;
 }
 .footer-links a {
   margin-right: 20px;
+}
+.page-footer-fixed {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
 }

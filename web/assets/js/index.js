@@ -115,6 +115,7 @@ $(document).ready(function () {
         $('body').animate({
           scrollTop: 0
         }, 500);
+        resizeWindow();
       });
     });
   }
@@ -148,5 +149,22 @@ $(document).ready(function () {
       showPackagesPage('', 0, DEFINE_PACKAGE_RESULT_LIMT);
     }
   })();
+  
+  // 重置footer位置
+  function resizeWindow () {
+    var h1 = $('body>.container:first').height();
+    var h2 = $(window).height();
+    var h3 = $('.page-footer').height();
+    var h4 = $('body>.container:first').offset().top;
+    var isFixed = (h1 + h3 + h4 + 20 < h2);
+    if (isFixed) {
+      $('.page-footer').addClass('page-footer-fixed');
+    } else {
+      $('.page-footer').removeClass('page-footer-fixed');
+    }
+  }
+  
+  $(window).resize(resizeWindow);
+  resizeWindow();
 
 });
