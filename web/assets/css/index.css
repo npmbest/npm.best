@@ -1,9 +1,17 @@
 a {
   cursor: pointer;
 }
+#ipt-search {
+  width: 400px;
+  border-radius: 4px 0 0 4px;
+  border-right: none;
+}
 #start-search {
-  border: none;
-  background: none;
+  background-color: #3079ED;
+  color: #FFF;
+  width: 60px;
+  border-radius: 0 4px 4px 0;
+  border-left: none;
 }
 #search-names {
   position: absolute;
@@ -36,9 +44,15 @@ a {
   min-height: 300px;
   word-break: break-all;
 }
-#packages p, #packages h3 {
+#packages p {
   margin-bottom: 0;
   font-weight: normal;
+}
+#packages h3 {
+  margin-bottom: 0;
+  font-weight: normal;
+  margin-top: 0;
+  font-size: 20px;
 }
 #packages .keyword {
   background-color: #FFFFE2;
@@ -52,4 +66,17 @@ a {
   border: none;
   padding-left: 0;
   padding-right: 0;
+}
+footer {
+  background-color: #F2F2F2;
+  padding: 18px 0;
+  margin-top: 20px;
+  color: #AAA;
+  border: 1px solid rgba(0, 0, 0, 0);
+}
+footer a {
+  color: #777;
+}
+.footer-links a {
+  margin-right: 20px;
 }
