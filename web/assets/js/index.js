@@ -15,7 +15,7 @@ $(document).ready(function () {
   var cache = new SuperCache({
     store: new SuperCache.LocalStore({
       type: 'local',
-      prefix: 'npmlink_',
+      prefix: 'npmbest_',
       max: 1000,
       gcProbability: 0.01
     }),
