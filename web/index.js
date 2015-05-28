@@ -32,5 +32,7 @@ app.use('/api', middleware.cache);
 require('./routes')(app);
 
 
-app.listen(config.get('web.port'), config.get('web.host'));
-console.log('server listen on %s:%s', config.get('web.host'), config.get('web.port'));
+app.listen(config.get('web.port'), config.get('web.host'), function () {
+  utils.logo();
+  console.log('server listen on %s:%s', config.get('web.host'), config.get('web.port'));
+});
