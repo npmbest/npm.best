@@ -100,7 +100,7 @@ $(document).ready(function () {
   
   // 显示模块列表
   function showPackagesPage (query, skip, limit) {
-    query = query.trim().replace(/[^a-zA-Z.\-_$+ ]/g, '').replace(/\s/, '+');
+    query = query.trim().replace(/[^0-9a-zA-Z.\-_$+ ]/g, '').replace(/\s/, '+');
     $('#ipt-search').val(query);
     queryPackages(query, skip, limit, function (err, ret) {
       if (err) return messageBox.error(err);
