@@ -84,3 +84,10 @@ a {
   width: 100%;
   bottom: 0;
 }
+#call-to-action {
+  background: none;
+  border: none;
+  margin-top: 50px;
+  font-size: 16px;
+  cursor: default;
+}
