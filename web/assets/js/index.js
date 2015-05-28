@@ -23,7 +23,7 @@ $(document).ready(function () {
       ajaxRequest.get('/api/package/names', {
         type: 'start',
         query: query,
-        limit: 10
+        limit: 5
       }, function (err, ret) {
         if (err) {
           console.error(err);

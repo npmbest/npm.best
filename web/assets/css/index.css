@@ -16,10 +16,13 @@
 }
 #search-names .list-group-item {
   background-color: #fff;
-  height: 37px;
+  height: 24px;
   overflow: hidden;
   word-break: break-all;
   border-radius: 0 !important;
+  border: none;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 #search-names .list-group-item:hover {
   cursor: pointer;
