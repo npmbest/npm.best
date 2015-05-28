@@ -9,7 +9,11 @@ var renderTplPackages = compileTemplate(function () {/*
   <li class="list-group-item">
     <h3>
       <a href="https://npmjs.com/package/{{item.name|escape}}" target="_blank">{{item.name|escape}}</a>
-      {% if item.author_name %}<small>by {{item.author_name|escape}} {% if item.author_email %}&lt;{{item.author_email|escape}}&gt;{% endif %}</small>{% endif %}
+      {% if item.author_name %}
+      <small>by {{item.author_name|escape}}
+        {% if item.author_email %}&lt;<a class="text-muted" href="mailto:{{item.author_email|escape}}">{{item.author_email|escape}}</a>&gt;{% endif %}
+      </small>
+      {% endif %}
     </h3>
     <div class="row">
       <div class="col-md-8">
@@ -22,12 +26,12 @@ var renderTplPackages = compileTemplate(function () {/*
           {% endfor %}
         </p>
         {% endif %}
-        <p>
+        <p class="text-muted">
           <span>Forks: <span class="number">{{item.fork_count|escape}}</span></span>,
           <span>Stargazers: <span class="number">{{item.star_count|escape}}</span></span>,
           <span>Subscribers: <span class="number">{{item.watch_count|escape}}</span></span>
         </p>
-        <p>
+        <p class="text-muted">
           Links:
           <a href="https://npmjs.com/package/{{item.name|escape}}" target="_blank">NPM</a> -
           {% if item.homepage %}<a href="{{item.homepage|escape}}" target="_blank">HomePage</a> - {% endif %}
