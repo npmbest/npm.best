@@ -1,5 +1,11 @@
 $(document).ready(function () {
   
+  templateContext.setFilter('ms_to_s', function (n) {
+    return (n / 1000).toFixed(2);
+  });
+  
+  //--------------------------------------------------------------------
+  
   // 数据缓存
   var cache = new SuperCache({
     store: new SuperCache.LocalStore({
@@ -36,13 +42,18 @@ $(document).ready(function () {
   
   // 查询指定关键字的模块列表
   function queryPackages (query, skip, limit, callback) {
+    var timestamp = Date.now();
     cache.get('packages_' + query + '_' + skip + '_' + limit, function (name, callback) {
       ajaxRequest.get('/api/search.json', {
         query: query,
         skip: skip,
         limit: limit
       }, callback);
-    }, callback);
+    }, function (err, ret) {
+      ret = ret || {};
+      ret.spent = Date.now() - timestamp;
+      callback(err, ret);
+    });
   }
   
   //--------------------------------------------------------------------
@@ -79,12 +90,12 @@ $(document).ready(function () {
   // 开始搜索
   $('#start-search').click(function () {
     $('#search-names').hide();
-    showPackagesPage($('#ipt-search').val(), 0, 50);
+    showPackagesPage($('#ipt-search').val(), 0, 20);
   });
   
   // 显示模块列表
   function showPackagesPage (query, skip, limit) {
-    query = query.trim().replace(/[^a-zA-Z.\-_$+]/g, '');
+    query = query.trim().replace(/[^a-zA-Z.\-_$+ ]/g, '').replace(/\s/, '+');
     queryPackages(query, skip, limit, function (err, ret) {
       if (err) return messageBox.error(err);
       var keywords = query.split('+');
