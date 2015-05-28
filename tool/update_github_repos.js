@@ -1,5 +1,5 @@
 /**
- * npm.link
+ * npm.best
  * 
  * @author Zongmin Lei <leizongmin@gmail.com>
  */
@@ -46,7 +46,7 @@ model.packages.find({is_github: 1}, {fields: 'name,repository'}, function (err, 
         request({
           url: 'https://api.github.com/repos/' + repo,
           headers: {
-            'user-agent': 'npm.link',
+            'user-agent': 'npm.best',
             'authorization': config.get('github.authorization')
           }
         }, function (err, res, body) {

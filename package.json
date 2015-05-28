@@ -1,21 +1,21 @@
 {
-  "name": "npm.link",
+  "name": "npm.best",
   "version": "1.0.0",
-  "description": "https://npm.link",
+  "description": "https://npm.best",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/npmlink/npm.link.git"
+    "url": "https://github.com/npmbest/npm.best.git"
   },
   "author": "Zongmin Lei <leizongmin@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/npmlink/npm.link/issues"
+    "url": "https://github.com/npmbest/npm.best/issues"
   },
-  "homepage": "https://github.com/npmlink/npm.link",
+  "homepage": "https://github.com/npmbest/npm.best",
   "dependencies": {
     "JSONStream": "^1.0.4",
     "async": "^1.0.0",

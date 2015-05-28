@@ -1,5 +1,5 @@
 /**
- * npm.link
+ * npm.best
  * 
  * @author Zongmin Lei <leizongmin@gmail.com>
  */

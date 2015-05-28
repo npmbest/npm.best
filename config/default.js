@@ -1,5 +1,5 @@
 /**
- * npm.link
+ * npm.best
  * 
  * @author Zongmin Lei <leizongmin@gmail.com>
  */
@@ -13,7 +13,7 @@ module.exports = function (ns) {
   // 监听地址
   ns('web.host', '127.0.0.1');
   // Cookie密钥
-  ns('web.cookie.secret', 'npmlink');
+  ns('web.cookie.secret', 'npmbest');
   
   // 数据存放目录
   ns('path.data', path.resolve(__dirname, '../data'));

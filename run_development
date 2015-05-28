@@ -2,5 +2,5 @@
 # run on development
 
 export NODE_ENV=development
-export DEBUG=npm.link:*,lei-mysql
+export DEBUG=npm.best:*,lei-mysql
 node $1

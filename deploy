@@ -5,5 +5,5 @@ git reset --hard
 git pull origin HEAD
 npm install
 
-pm2 stop npm.link -f
-pm2 start web/index.js -n npm.link
+pm2 stop npm.best -f
+pm2 start web/index.js -n npm.best

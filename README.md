@@ -1,2 +1,2 @@
-# npm.link
-https://npm.link
+# Find the best NPM packages
+https://npm.best
