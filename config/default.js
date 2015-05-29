@@ -18,8 +18,8 @@ module.exports = function (ns) {
   // 数据存放目录
   ns('path.data', path.resolve(__dirname, '../data'));
 
-  // NPM库下载地址
-  ns('define.npm.registry', 'http://registry.npmjs.org/-/all');
+  // NPM库下载根地址
+  ns('define.npm.registry', 'http://registry.npmjs.org');
   // NPM库本地存储名称
   ns('define.npm.registryFileName', 'npm_packages.json');
   

@@ -11,7 +11,7 @@ var mkdirp = require('mkdirp');
 
 
 var file = path.resolve(config.get('path.data'), config.get('define.npm.registryFileName'));
-var url = config.get('define.npm.registry');
+var url = config.get('define.npm.registry') + '/-/all';
 console.log('download from %s', url);
 
 mkdirp.sync(path.dirname(file));

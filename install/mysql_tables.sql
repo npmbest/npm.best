@@ -8,6 +8,7 @@ CREATE TABLE `github_repos` (
 CREATE TABLE `npm_packages` (
   `name` varchar(255) NOT NULL DEFAULT '',
   `json_data` text NOT NULL,
+  `json_detail` longtext NOT NULL,
   `updated` datetime NOT NULL,
   PRIMARY KEY (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
