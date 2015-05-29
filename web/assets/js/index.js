@@ -6,7 +6,7 @@ $(document).ready(function () {
   
   //--------------------------------------------------------------------
   
-  var DEFINE_KEYWORD_SUGGESTION_LIMIT = 5;
+  var DEFINE_KEYWORD_SUGGESTION_LIMIT = 10;
   var DEFINE_PACKAGE_RESULT_LIMT = 10;
   
   //--------------------------------------------------------------------
@@ -19,24 +19,22 @@ $(document).ready(function () {
       max: 1000,
       gcProbability: 0.01
     }),
-    ttl: 600
+    ttl: 10
   });
   
-  // 查询指定关键字的模块名
-  function queryPackageNames (query, callback) {
+  // 搜索输入框提示
+  function querySearchInputSuggestions (query, callback) {
     cache.get('package_names_' + query, function (name, callback) {
-      ajaxRequest.get('/api/package/names', {
+      ajaxRequest.get('/api/search/input/suggestions', {
         type: 'start',
         query: query,
         limit: DEFINE_KEYWORD_SUGGESTION_LIMIT
       }, function (err, ret) {
         if (err) {
           console.error(err);
-          callback(null, {count: 0, list: []});
+          callback(null, {list: []});
         } else {
-          callback(null, {count: ret.count, list: ret.list.filter(function (item) {
-            return item.trim();
-          })});
+          callback(null, {list: ret.list});
         }
       });
     }, function (err, ret) {
@@ -63,6 +61,13 @@ $(document).ready(function () {
   
   //--------------------------------------------------------------------
   
+  function highlightKeyword (keyword, html) {
+    if (!keyword) return html;
+    return html.replace(new RegExp(keyword, 'ig'), '<span class="keyword">' + keyword + '</span>');
+  }
+  
+  //--------------------------------------------------------------------
+  
   // 顶栏搜索框
   $('#ipt-search').keyup(function (e) {
     var c = e.keyCode || e.charCode || e.which;
@@ -70,10 +75,14 @@ $(document).ready(function () {
       $('#start-search').click();
     } else {
       var query = $(this).val().trim();
-      queryPackageNames(query, function (ret) {
-        renderTplSearchNames.to('#search-names', ret, function () {
+      querySearchInputSuggestions(query, function (ret) {
+        renderTplSearchInputGuggestions.to('#search-input-suggestions', ret, function () {
           clearTimeout(iptSearchTid);
-          $('#search-names').show();
+          $('#search-input-suggestions .highlight-keyword').each(function () {
+            var $me = $(this);
+            $me.html(highlightKeyword(query, $me.html()));
+          });
+          $('#search-input-suggestions').show();
         });
       });
     }
@@ -82,19 +91,19 @@ $(document).ready(function () {
   $('#ipt-search').focusout(function () {
     clearTimeout(iptSearchTid);
     iptSearchTid = setTimeout(function () {
-      $('#search-names').hide();
+      $('#search-input-suggestions').hide();
     }, 200);
   });
   
   // 选择提示名称的列表项
-  $('#search-names').delegate('.list-group-item', 'click', function () {
+  $('#search-input-suggestions').delegate('.list-group-item', 'click', function () {
     $('#ipt-search').val($(this).text().trim());
     $('#start-search').click();
   });
   
   // 开始搜索
   $('#start-search').click(function () {
-    $('#search-names').hide();
+    $('#search-input-suggestions').hide();
     location.hash = '!' + $('#ipt-search').val();
   });
   
@@ -123,11 +132,6 @@ $(document).ready(function () {
         resizeWindow();
       });
     });
-  }
-  
-  function highlightKeyword (keyword, html) {
-    if (!keyword) return html;
-    return html.replace(new RegExp(keyword, 'ig'), '<span class="keyword">' + keyword + '</span>');
   }
   
   //--------------------------------------------------------------------

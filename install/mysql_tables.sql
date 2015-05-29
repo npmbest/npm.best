@@ -48,3 +48,8 @@ CREATE TABLE `packages` (
   KEY `is_github` (`is_github`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE `keyword_suggestions` (
+  `word` varchar(255) NOT NULL DEFAULT '',
+  `result_count` int(11) NOT NULL,
+  PRIMARY KEY (`word`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

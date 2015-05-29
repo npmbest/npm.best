@@ -1,0 +1,14 @@
+var renderTplSearchInputGuggestions = compileTemplate(function () {/*
+
+<ul class="list-group">
+  {% for item in list %}
+  <li class="list-group-item">
+    <span class="highlight-keyword">{{item.w|escape}}</span>
+    {% if item.c > 0 %}
+    <span class="pull-right text-muted">about {{item.c|escape}} results</span>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+
+*/});

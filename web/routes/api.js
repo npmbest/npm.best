@@ -14,6 +14,46 @@ var debug = utils.debug('routes:api');
 
 module.exports = function (app) {
   
+  // 搜索输入提示
+  app.get('/api/search/input/suggestions', searchInputSuggestions);
+  app.get('/api/search/input/suggestions.*', searchInputSuggestions);
+  function searchInputSuggestions (req, res, next) {
+    var query = req.query.query || '';
+    var limit = Number(req.query.limit);
+    
+    if (!(limit > 0)) limit = config.get('define.query.limit');
+    
+    var share = {};
+    async.series([
+      function (next) {
+        
+        model.keyword_suggestions.search(query, {
+          skip: 0,
+          limit: limit
+        }, function (err, ret) {
+          share.list = ret;
+          next(err);
+        });
+        
+      },
+      function (next) {
+       
+         share.list = share.list.map(function (item) {
+           return {w: item.word, c: item.result_count};
+         });
+         next();
+        
+      }
+    ], function (err) {
+      if (err) return res.apiError(err);
+      res.apiSuccess({
+        query: query,
+        limit: limit,
+        list: share.list
+      });
+    });
+  }
+  
   // 搜索模块名称
   app.get('/api/package/names', searchPackageNames);
   app.get('/api/package/names.*', searchPackageNames);
