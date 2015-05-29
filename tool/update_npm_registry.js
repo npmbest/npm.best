@@ -67,6 +67,20 @@ function updateNextItem () {
   }
 }
 
+function formatLicense (license) {
+  license = license.toString();
+  if (license.indexOf('http://') === -1 && license.indexOf('https://') === -1) {
+    license = license.replace(/license/img, '').replace(/\s+/g, ' ').trim();
+    license = license.replace(/MIT/ig, 'MIT');
+    license = license.replace(/BSD/ig, 'BSD');
+    license = license.replace(/GPL/ig, 'GPL');
+    license = license.replace(/LGPL/ig, 'LGPL');
+    license = license.replace(/Apache/ig, 'Apache');
+  }
+  return license;
+}
+
+
 function onItem (item, next) {
   
   counter++;
@@ -99,7 +113,7 @@ function onItem (item, next) {
         var data = {
           latest_version: getLatestVersion(item.versions),
           modified: (item.time && item.time.modified) || '',
-          license: item.license || '',
+          license: formatLicense((item.license && item.license.type) || item.license || ''),
           repository: (item.repository && item.repository.url) || '',
           is_github: isGithubRepository(item.repository && item.repository.url),
           homepage: item.homepage || '',
