@@ -21,16 +21,22 @@ var renderTplPackages = compileTemplate(function () {/*
         {% if item.keywords %}
         <p class="text-muted">Keywords: 
           {% assign keywords = item.keywords|split:',' %}
-          {% for keyword in keywords %}
+          {% for keyword in keywords limit:10 %}
           <a class="text-muted highlight-keyword" href="#!{{keyword|escape}}">{{keyword|escape}}</a>{% unless forloop.last %}, {% endunless %}
           {% endfor %}
+          {% if keywords.length > 10 %}
+          , and {{keywords.length|minus:10|escape}} more
+          {% endif %}
         </p>
         {% endif %}
+        {% if item.is_github %}
         <p class="text-muted">
-          <span>Forks: <span class="number">{{item.fork_count|escape}}</span></span>,
-          <span>Stargazers: <span class="number">{{item.star_count|escape}}</span></span>,
-          <span>Subscribers: <span class="number">{{item.watch_count|escape}}</span></span>
+          <span class="text-github"><i class="fa fa-github-square"></i> GitHub</span>
+          <span><i class="fa fa-github"></i> stargazers: <span class="number">{{item.star_count|escape}}</span></span>,
+          <span><i class="fa fa-code-fork"></i> forks: <span class="number">{{item.fork_count|escape}}</span></span>,
+          <span><i class="fa fa-eye"></i> subscribers: <span class="number">{{item.watch_count|escape}}</span></span>
         </p>
+        {% endif %}
         <p class="text-muted">
           Links:
           <a href="https://npmjs.com/package/{{item.name|escape}}" target="_blank">NPM</a> -
@@ -44,8 +50,7 @@ var renderTplPackages = compileTemplate(function () {/*
       </div>
     </div>
     <p class="text-muted">
-      Latest version: {{item.latest_version|escape}},
-      updated at {{item.modified|date:'%Y-%m-%d %H:%M'|escape}}
+      Version {{item.latest_version|escape}} published at {{item.modified|date:'%Y-%m-%d %H:%M'|escape}}
       {% if item.license %}, License: {{item.license|escape}}{% endif %}
     </p>
   </li>

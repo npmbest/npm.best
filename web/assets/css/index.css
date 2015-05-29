@@ -95,3 +95,11 @@ a {
 #packages {
   display: none;
 }
+.text-github {
+  background-color: rgba(60, 118, 61, 0.72);
+  color: #FFF;
+  display: inline-block;
+  font-size: 12px;
+  padding: 0 6px;
+  border-radius: 4px;
+}
