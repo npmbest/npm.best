@@ -130,6 +130,23 @@ module.exports = function (app) {
           next(err);
         });
         
+      },
+      function (next) {
+        
+        if (skip > 0) return next();
+        
+        // 如果搜索的关键字是一个模块的名称，则将这个模块的放在搜索结果的第一条
+        model.packages.findOne({name: query}, function (err, ret) {
+          share.package = ret;
+          if (ret) {
+            share.list = share.list.filter(function (item) {
+              return item.name !== ret.name;
+            });
+            share.list.unshift(ret);
+          }
+          next(err);
+        });
+        
       }
     ], function (err) {
       if (err) return res.apiError(err);
@@ -138,7 +155,8 @@ module.exports = function (app) {
         skip: skip,
         limit: limit,
         count: share.count,
-        list: share.list
+        list: share.list,
+        package: share.package
       });
     });
   }
