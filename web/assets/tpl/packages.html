@@ -9,11 +9,6 @@ var renderTplPackages = compileTemplate(function () {/*
   <li class="list-group-item">
     <h3>
       <a href="https://npmjs.com/package/{{item.name|escape}}" target="_blank">{{item.name|escape}}</a>
-      {% if item.author_name %}
-      <small>by {{item.author_name|escape}}
-        {% if item.author_email %}&lt;<a class="text-muted" href="mailto:{{item.author_email|escape}}">{{item.author_email|escape}}</a>&gt;{% endif %}
-      </small>
-      {% endif %}
     </h3>
     <div class="row">
       <div class="col-md-8">
@@ -50,7 +45,15 @@ var renderTplPackages = compileTemplate(function () {/*
       </div>
     </div>
     <p class="text-muted">
-      Version {{item.latest_version|escape}} published at {{item.modified|date:'%Y-%m-%d %H:%M'|escape}}
+      Version {{item.latest_version|escape}} published
+      {% if item.author_name %} by
+        {% if item.author_email %}
+        <a class="author-name" href="mailto:{{item.author_email|escape}}">{{item.author_name|escape}}</a>
+        {% else %}
+        <span class="author-name">{{item.author_name|escape}}</span>
+        {% endif %}
+      {% endif %}
+      at {{item.modified|date:'%Y-%m-%d %H:%M'|escape}}
       {% if item.license %}, License: {{item.license|escape}}{% endif %}
     </p>
   </li>
