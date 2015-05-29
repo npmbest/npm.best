@@ -92,3 +92,6 @@ a {
   cursor: default;
   width: 800px;
 }
+#packages {
+  display: none;
+}
