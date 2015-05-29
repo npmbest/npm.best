@@ -1,5 +1,11 @@
 #!/bin/sh
 # run on background
 
-nohup node $1 > background.log &
-tail background.log
+if [ $2 ]
+then
+  nohup node $1 > logs/background_$2.log &
+  tail logs/background_$2.log
+else
+  nohup node $1 > logs/background.log &
+  tail logs/background.log
+fi
