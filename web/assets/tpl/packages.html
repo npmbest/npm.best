@@ -53,8 +53,8 @@ var renderTplPackages = compileTemplate(function () {/*
         <span class="author-name">{{item.author_name|escape}}</span>
         {% endif %}
       {% endif %}
-      at {{item.modified|date:'%Y-%m-%d %H:%M'|escape}}
       {% if item.license %}under {{item.license|escape}} License{% endif %}
+      {{item.modified|friendly_time|escape}}
     </p>
   </li>
   {% endfor %}

@@ -81,6 +81,10 @@
     return render;
   }
   
+  templateContext.setFilter('friendly_time', function (str) {
+    return moment(str).fromNow();
+  });
+  
   window.templateContext = templateContext;
   window.compileTemplate = compileTemplate;
 
