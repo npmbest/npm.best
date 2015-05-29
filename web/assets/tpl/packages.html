@@ -6,7 +6,7 @@ var renderTplPackages = compileTemplate(function () {/*
 </p>
 <ul class="list-group">
   {% for item in list %}
-  <li class="list-group-item">
+  <li class="list-group-item {% if query == item.name %}highlight{% endif %}">
     <h3>
       <a href="https://npmjs.com/package/{{item.name|escape}}" target="_blank">{{item.name|escape}}</a>
     </h3>

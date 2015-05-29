@@ -78,6 +78,13 @@ a {
   padding-left: 0;
   padding-right: 0;
 }
+#packages .list-group-item.highlight {
+  border: 1px solid #DDD;
+  padding-left: 20px;
+  margin-bottom: 0;
+  background-color: #FCFDEF;
+  color: #000;
+}
 .page-footer {
   background-color: #F2F2F2;
   padding: 18px 0;
