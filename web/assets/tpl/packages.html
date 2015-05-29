@@ -54,7 +54,7 @@ var renderTplPackages = compileTemplate(function () {/*
         {% endif %}
       {% endif %}
       at {{item.modified|date:'%Y-%m-%d %H:%M'|escape}}
-      {% if item.license %}, License: {{item.license|escape}}{% endif %}
+      {% if item.license %}under {{item.license|escape}} License{% endif %}
     </p>
   </li>
   {% endfor %}
