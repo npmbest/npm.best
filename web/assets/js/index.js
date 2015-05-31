@@ -19,7 +19,7 @@ $(document).ready(function () {
       max: 1000,
       gcProbability: 0.01
     }),
-    ttl: 10
+    ttl: 600
   });
   
   // 搜索输入框提示
@@ -126,6 +126,7 @@ $(document).ready(function () {
         });
         $('#packages').show();
         $('#call-to-action').hide();
+        $('#search-input-suggestions').hide();
         $('body').animate({
           scrollTop: 0
         }, 500);
