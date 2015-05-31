@@ -1,8 +1,12 @@
 var renderTplPackages = compileTemplate(function () {/*
 
 <p class="text-muted">
-  About {{count|escape}} results {% if query %}for "{{query|escape}}"{% endif %}, show {{skip|escape}} to {{skip|plus:limit|escape}}
-  ({{spent|ms_to_s|escape}} seconds)
+  {{'About %s results'|i18n:count}}
+  {% if query %}{{'for "%s"'|i18n:query|escape}}{% endif %},
+  {% assign result_end = skip|plus:limit %}
+  {{'show %s to %s'|i18n:skip,result_end}}
+  {% assign spent_ms = spent|ms_to_s %}
+  ({{'spent %s seconds'|i18n:spent_ms}})
 </p>
 <ul class="list-group">
   {% for item in list %}
@@ -14,30 +18,31 @@ var renderTplPackages = compileTemplate(function () {/*
       <div class="col-md-8">
         <p class="highlight-keyword">{{item.description|escape}}</p>
         {% if item.keywords %}
-        <p class="text-muted">Keywords: 
+        <p class="text-muted">{{'Keywords'|i18n}}: 
           {% assign keywords = item.keywords|split:',' %}
           {% for keyword in keywords limit:10 %}
           <a class="text-muted highlight-keyword" href="#!{{keyword|escape}}">{{keyword|escape}}</a>{% unless forloop.last %}, {% endunless %}
           {% endfor %}
           {% if keywords.length > 10 %}
-          , and {{keywords.length|minus:10|escape}} more
+            {% assign more_keyword_num = keywords.length|minus:10 %}
+          , {{'and %s more'|i18n:more_keyword_num}}
           {% endif %}
         </p>
         {% endif %}
         {% if item.is_github %}
         <p class="text-muted">
           <span class="text-github"><i class="fa fa-github-square"></i> GitHub</span>
-          <span><i class="fa fa-github"></i> stargazers: <span class="number">{{item.star_count|escape}}</span></span>,
-          <span><i class="fa fa-code-fork"></i> forks: <span class="number">{{item.fork_count|escape}}</span></span>,
-          <span><i class="fa fa-eye"></i> subscribers: <span class="number">{{item.watch_count|escape}}</span></span>
+          <span><i class="fa fa-github"></i> {{'stargazers'|i18n}}: <span class="number">{{item.star_count|escape}}</span></span>,
+          <span><i class="fa fa-code-fork"></i> {{'forks'|i18n}}: <span class="number">{{item.fork_count|escape}}</span></span>,
+          <span><i class="fa fa-eye"></i> {{"subscribers"|i18n}}: <span class="number">{{item.watch_count|escape}}</span></span>
         </p>
         {% endif %}
         <p class="text-muted">
-          Links:
-          <a href="https://npmjs.com/package/{{item.name|escape}}" target="_blank">NPM</a> -
-          {% if item.homepage %}<a href="{{item.homepage|escape}}" target="_blank">HomePage</a> - {% endif %}
-          {% if item.repository %}<a href="{{item.repository|escape}}" target="_blank">GitHub</a> - {% endif %}
-          {% if item.bugs %}<a href="{{item.bugs|escape}}" target="_blank">Issues</a>{% endif %}
+          {{'Links'|i18n}}:
+          <a href="https://npmjs.com/package/{{item.name|escape}}" target="_blank">{{'NPM'|i18n}}</a> -
+          {% if item.homepage %}<a href="{{item.homepage|escape}}" target="_blank">{{'HomePage'|i18n}}</a> - {% endif %}
+          {% if item.repository %}<a href="{{item.repository|escape}}" target="_blank">{{'GitHub'|i18n}}</a> - {% endif %}
+          {% if item.bugs %}<a href="{{item.bugs|escape}}" target="_blank">{{'Issues'|i18n}}</a>{% endif %}
         </p>
       </div>
       <div class="col-md-4">
@@ -45,15 +50,8 @@ var renderTplPackages = compileTemplate(function () {/*
       </div>
     </div>
     <p class="text-muted">
-      Version {{item.latest_version|escape}} published
-      {% if item.author_name %} by
-        {% if item.author_email %}
-        <a class="author-name" href="mailto:{{item.author_email|escape}}">{{item.author_name|escape}}</a>
-        {% else %}
-        <span class="author-name">{{item.author_name|escape}}</span>
-        {% endif %}
-      {% endif %}
-      {% if item.license %}under {{item.license|escape}} License{% endif %}
+      {{'Version %s published by %s'|i18n:item.latest_version,item.author_name}}
+      {% if item.license %}{{'under %s license'|i18n:item.license}}{% endif %}
       {{item.modified|friendly_time|escape}}
     </p>
   </li>
@@ -64,14 +62,14 @@ var renderTplPackages = compileTemplate(function () {/*
     {% assign skip_previous = skip|minus:limit %}
     {% assign skip_next = skip|plus:limit %}
     {% if skip_previous >= 0 %}
-    <li><a class="show-packages-page" data-query="{{query|escape}}" data-skip="{{skip_previous|escape}}" data-limit="{{limit|escape}}">Previous</a></li>
+    <li><a class="show-packages-page" data-query="{{query|escape}}" data-skip="{{skip_previous|escape}}" data-limit="{{limit|escape}}">{{'Previous'|i18n}}</a></li>
     {% else %}
-    <li class="disabled"><a>Previous</a></li>
+    <li class="disabled"><a>{{'Previous'|i18n}}</a></li>
     {% endif %}
     {% if skip_next < count %}
-    <li><a class="show-packages-page" data-query="{{query|escape}}" data-skip="{{skip_next|escape}}" data-limit="{{limit|escape}}">Next</a></li>
+    <li><a class="show-packages-page" data-query="{{query|escape}}" data-skip="{{skip_next|escape}}" data-limit="{{limit|escape}}">{{'Next'|i18n}}</a></li>
     {% else %}
-    <li class="disabled"><a>Next</a></li>
+    <li class="disabled"><a>{{'Next'|i18n}}</a></li>
     {% endif %}
   </ul>
 </nav>

@@ -94,13 +94,13 @@ $(document).ready(function () {
       $('#search-input-suggestions').hide();
     }, 200);
   });
-  
+  /*
   // 选择提示名称的列表项
   $('#search-input-suggestions').delegate('.list-group-item', 'click', function () {
     $('#ipt-search').val($(this).text().trim());
     $('#start-search').click();
   });
-  
+  */
   // 开始搜索
   $('#start-search').click(function () {
     $('#search-input-suggestions').hide();

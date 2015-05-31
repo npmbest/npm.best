@@ -1,0 +1,22 @@
+{
+  "about %s results": "大约%s条结果",
+  
+  "About %s results": "大约%s条结果",
+  "for \"%s\"": "搜索\"%s\"",
+  "show %s to %s": "显示第%s至%s条",
+  "spent %s seconds": "用了%s秒",
+  "Keywords": "关键词",
+  "and %s more": "和另外%s个",
+  "stargazers": "收藏",
+  "forks": "Fork",
+  "subscribers": "关注",
+  "Links": "链接",
+  "NPM": "NPM",
+  "HomePage": "项目主页",
+  "GitHub": "项目源码",
+  "Issues": "问题反馈",
+  "Previous": "上一页",
+  "Next": "下一页",
+  "Version %s published by %s": "最新版本为%s 由%s发布",
+  "under %s license": "%s授权协议"
+}

@@ -43,6 +43,14 @@ a {
   font-weight: bold;
   background-color: #eee;
 }
+#search-input-suggestions .list-group-item a {
+  color: #333;
+  display: block;
+}
+#search-input-suggestions .list-group-item a:hover {
+  font-weight: normal;
+  text-decoration: none;
+}
 #search-input-suggestions .keyword {
   background-color: #FFFFE2;
   font-weight: bold;

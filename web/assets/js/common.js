@@ -87,5 +87,21 @@
   
   window.templateContext = templateContext;
   window.compileTemplate = compileTemplate;
+  
+  // i18n
+  i18n.init({
+    useCookie: true,
+    cookieName: 'language',
+    lngWhitelist: ['en', 'zh'],
+    resGetPath: '/assets/i18n/__lng__.json'
+  });
+  templateContext.setFilter('i18n', function () {
+    var args = Array.prototype.slice.call(arguments);
+    args = args.map(function (v) {
+      if (v === 0 || v === null || v === false) v = String(v);
+      return v;
+    });
+    return i18n.t.apply(i18n, args);
+  });
 
 })();
