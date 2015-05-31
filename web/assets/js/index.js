@@ -45,6 +45,7 @@ $(document).ready(function () {
   
   // 查询指定关键字的模块列表
   function queryPackages (query, skip, limit, callback) {
+    if (!query) return;
     var timestamp = Date.now();
     cache.get('packages_' + query + '_' + skip + '_' + limit, function (name, callback) {
       ajaxRequest.get('/api/search.json', {
@@ -94,13 +95,7 @@ $(document).ready(function () {
       $('#search-input-suggestions').hide();
     }, 200);
   });
-  /*
-  // 选择提示名称的列表项
-  $('#search-input-suggestions').delegate('.list-group-item', 'click', function () {
-    $('#ipt-search').val($(this).text().trim());
-    $('#start-search').click();
-  });
-  */
+  
   // 开始搜索
   $('#start-search').click(function () {
     $('#search-input-suggestions').hide();
