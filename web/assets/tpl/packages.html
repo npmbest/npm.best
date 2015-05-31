@@ -52,7 +52,8 @@ var renderTplPackages = compileTemplate(function () {/*
     <p class="text-muted">
       {{'Version %s published by %s'|i18n:item.latest_version,item.author_name}}
       {% if item.license %}{{'under %s license'|i18n:item.license}}{% endif %}
-      {{item.modified|friendly_time|escape}}
+      {% assign modified_at = item.modified|friendly_time %}
+      {{'last modiefied at %s'|i18n:modified_at}}
     </p>
   </li>
   {% endfor %}

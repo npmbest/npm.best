@@ -82,7 +82,9 @@
   }
   
   templateContext.setFilter('friendly_time', function (str) {
-    return moment(str).fromNow();
+    var str = moment(str).fromNow();
+    if (moment.locale() === 'zh') str = str.replace(/\s/g, '');
+    return str;
   });
   
   window.templateContext = templateContext;
@@ -103,5 +105,6 @@
     });
     return i18n.t.apply(i18n, args);
   });
+  moment.locale(i18n.detectLanguage());
 
 })();

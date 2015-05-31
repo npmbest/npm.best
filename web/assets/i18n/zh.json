@@ -11,12 +11,13 @@
   "forks": "Fork",
   "subscribers": "关注",
   "Links": "链接",
-  "NPM": "NPM",
+  "NPM": "NPM主页",
   "HomePage": "项目主页",
   "GitHub": "项目源码",
   "Issues": "问题反馈",
   "Previous": "上一页",
   "Next": "下一页",
   "Version %s published by %s": "最新版本为%s 由%s发布",
-  "under %s license": "%s授权协议"
+  "under %s license": "%s授权协议",
+  "last modiefied at %s": "于%s"
 }
