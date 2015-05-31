@@ -1,4 +1,4 @@
-$(document).ready(function () {
+function mainPageInit () {
   
   templateContext.setFilter('ms_to_s', function (n) {
     return (n / 1000).toFixed(2);
@@ -188,4 +188,4 @@ $(document).ready(function () {
     }, 500);
   })();
 
-});
+}

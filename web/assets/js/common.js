@@ -96,6 +96,8 @@
     cookieName: 'language',
     lngWhitelist: ['en', 'zh'],
     resGetPath: '/assets/i18n/__lng__.json'
+  }, function () {
+    window.mainPageInit && mainPageInit();
   });
   templateContext.setFilter('i18n', function () {
     var args = Array.prototype.slice.call(arguments);
