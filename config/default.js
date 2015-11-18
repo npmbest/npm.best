@@ -46,11 +46,19 @@ module.exports = function (ns) {
   ns('cache.api.redis.password', undefined);
 
   // KV Store
-  ns('store.redis.host', '127.0.0.1');
-  ns('store.redis.port', 8888);
-  ns('store.redis.db', 0);
-  ns('store.redis.password', undefined);
-  ns('store.redis.prefix', 'store:');
+  // data
+  ns('store.data.host', '127.0.0.1');
+  ns('store.data.port', 8888);
+  ns('store.data.db', 0);
+  ns('store.data.password', undefined);
+  ns('store.data.prefix', 'store:');
+  // set
+  ns('store.set.host', '127.0.0.1');
+  ns('store.set.port', 6379);
+  ns('store.set.db', 0);
+  ns('store.set.password', undefined);
+  ns('store.set.prefix', 'set:');
+  // ttl
   ns('store.ttl.github', 3600 * 24 * 30);
 
   // GitHub授权

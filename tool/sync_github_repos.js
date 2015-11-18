@@ -52,10 +52,19 @@ model.packages.find({
     async.series([
       (next) => {
 
+        store.githubNotFound.has(repo, (err, yes) => {
+          if (err) return next(err);
+          if (yes) return next(new Error('skip not exists GitHub repo: ' + repo));
+          next();
+        });
+
+      },
+      (next) => {
+
         request({
           url: 'https://api.github.com/repos/' + repo,
           headers: {
-            'user-agent': 'npm.best',
+            'user-agent': 'https://npm.best',
             'authorization': config.get('github.authorization')
           }
         }, (err, res, body) => {
@@ -67,32 +76,26 @@ model.packages.find({
               return next(err);
             }
           }
-          if (info.message) err = new Error(info.message);
-          else if (!info.id) err = new Error('fail to get repo id');
+
+          if (info.message) {
+            err = new Error(info.message);
+          } else if (!info.id) {
+            err = new Error('fail to get repo id');
+          }
+
+          if (err && err.toString().toLowerCase().indexOf('not found') !== -1) {
+            store.githubNotFound.add(repo, (err) => {
+              if (err) console.log(err);
+            });
+          }
+
           next(err);
         });
 
       },
       (next) => {
-/*
-        model.github_repos.findOne({name: item.name}, (err, ret) => {
-          if (err) return next(err);
-          if (ret) {
-            model.github_repos.update({name: item.name}, {
-              json_data: json,
-              updated: new Date()
-            }, next);
-          } else {
-            model.github_repos.create({
-              name: item.name,
-              json_data: json,
-              updated: new Date()
-            }, next);
-          }
-        });
-*/
-        store.github.set(item.name, info, next);
 
+        store.github.set(item.name, info, next);
 
       },
       (next) => {
