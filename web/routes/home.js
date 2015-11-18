@@ -1,6 +1,6 @@
 /**
  * npm.best
- * 
+ *
  * @author Zongmin Lei <leizongmin@gmail.com>
  */
 
@@ -11,7 +11,7 @@ var debug = utils.debug('routes:home');
 
 
 module.exports = function (app) {
-  
+
   app.get('/', function (req, res, next) {
     res.render('index');
   });

@@ -33,7 +33,7 @@ app.use(i18n.init);
 app.set('views', path.resolve(__dirname, 'views'));
 app.set('view engine', 'html');
 app.engine('html', expressLiquid({
-  context: require('./filters').context, 
+  context: require('./filters').context,
   traceError: true
 }));
 app.use(expressLiquid.middleware);
