@@ -43,7 +43,15 @@ module.exports = function (ns) {
   ns('cache.api.redis.port', 6379);
   ns('cache.api.redis.db', 0);
   ns('cache.api.redis.prefix', 'cache:api:');
-  ns('cache.api.redis.auth_pass', undefined);
+  ns('cache.api.redis.password', undefined);
+
+  // KV Store
+  ns('store.redis.host', '127.0.0.1');
+  ns('store.redis.port', 8888);
+  ns('store.redis.db', 0);
+  ns('store.redis.password', undefined);
+  ns('store.redis.prefix', 'store:');
+  ns('store.ttl.github', 3600 * 24 * 30);
 
   // GitHub授权
   ns('github.authorization', '');

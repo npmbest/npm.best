@@ -28,6 +28,7 @@
     "express": "^4.12.4",
     "express-liquid": "^0.2.6",
     "i18n": "^0.5.0",
+    "ioredis": "^1.10.0",
     "lei-config": "^1.0.0",
     "lei-mysql": "^0.1.6",
     "lei-ns": "^0.1.2",
