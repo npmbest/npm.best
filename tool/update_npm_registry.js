@@ -40,12 +40,12 @@ fileStream.pipe(jsonStream);
 let isEnd = false;
 let pending = 0;
 let list = [];
-jsonStream.on('data', (data) => {
+jsonStream.on('data', function (data) {
   fileStream.pause();
   list.push(data);
   updateNextItem();
 });
-jsonStream.on('end', () => {
+jsonStream.on('end', function () {
   isEnd = true;
   updateNextItem();
 });
@@ -62,7 +62,7 @@ function updateNextItem () {
   } else {
     isPending = true;
     let item = list.shift();
-    onItem(item, () => {
+    onItem(item, function () {
       isPending = false;
       process.nextTick(updateNextItem);
     });
@@ -90,7 +90,7 @@ function onItem (item, callback) {
   pending++;
   console.log('[%s] update package %s', counter, item.name);
 
-  model.packages.findOne({name: item.name}, (err, ret) => {
+  model.packages.findOne({name: item.name}, function (err, ret) {
     if (err) return callback(err);
     let data = {
       latest_version: getLatestVersion(item.versions),
@@ -106,7 +106,7 @@ function onItem (item, callback) {
       author_email: (item.author && item.author.email) || ''
     };
 
-    let cb = (err) => {
+    let cb = function (err) {
       if (err) {
         console.log('  - %s', err);
       } else {
