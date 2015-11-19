@@ -24,8 +24,29 @@ function getGitRepoNameFromUrl (url) {
 
 
 let timestamp = Date.now();
-let DAY = 2;
-//let sql = 'SELECT `name`,`repository` FROM `packages` WHERE `is_github`=1';
+var HEADERS = {
+  'user-agent': 'https://npm.best',
+  'authorization': config.get('github.authorization')
+};
+
+function requestGithub (url, callback) {
+  request({
+    url: url,
+    headers: HEADERS
+  }, function (err, res, body) {
+    let info = null, json = null;
+    if (body) {
+      try {
+        json = body.toString();
+        info = JSON.parse(json);
+      } catch (err) {
+        return callback(err);
+      }
+    }
+    callback(err, info, res, json);
+  });
+}
+
 model.packages.find({
   is_github: 1
 }, {
@@ -49,7 +70,6 @@ model.packages.find({
       return callback();
     }
 
-    let info = null, json = null;
     async.series([
       function (next) {
 
@@ -62,30 +82,20 @@ model.packages.find({
       },
       function (next) {
 
-        request({
-          url: 'https://api.github.com/repos/' + repo,
-          headers: {
-            'user-agent': 'https://npm.best',
-            'authorization': config.get('github.authorization')
-          }
-        }, function (err, res, body) {
-          if (body) {
-            try {
-              json = body.toString();
-              info = JSON.parse(json);
-            } catch (err) {
-              return next(err);
-            }
-          }
-
+        requestGithub('https://api.github.com/repos/' + repo, function (err, info) {
           if (info.message) {
             err = new Error(info.message);
           } else if (!info.id) {
             err = new Error('fail to get repo id');
           }
 
-          if (err && err.toString().toLowerCase().indexOf('not found') !== -1) {
-            store.githubNotFound.add(repo, (err) => { if (err) console.log(err); });
+          if (err) {
+            var errMsg = err.toString().toLowerCase();
+            if (errMsg.indexOf('not found') !== -1) {
+              store.githubNotFound.add(repo, (err) => { if (err) console.log(err); });
+            } else if (errMsg.indexOf('limit exceeded') !== -1) {
+              return callback(err);
+            }
           }
 
           next(err);
@@ -119,9 +129,24 @@ model.packages.find({
 
   }
 
-  utils.multiThreadEachSeries(parseInt(list.length / 5, 10), list, fetchRepo, function (err) {
-    if (err) console.log(err);
-    console.log('done. spent %sms', Date.now() - timestamp);
-    process.exit();
-  });
+  function showRateLimit (callback) {
+    requestGithub('https://api.github.com/rate_limit', function (err, info) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(info);
+      }
+      callback();
+    });
+  }
+
+  function start () {
+    utils.multiThreadEachSeries(parseInt(list.length / 2, 10), list, fetchRepo, function (err) {
+      if (err) console.log(err);
+      console.log('done. spent %sms', Date.now() - timestamp);
+      process.exit();
+    });
+  }
+
+  showRateLimit(start);
 });
