@@ -70,6 +70,7 @@ model.packages.find({
       return callback();
     }
 
+    let info = null;
     async.series([
       function (next) {
 
@@ -82,7 +83,8 @@ model.packages.find({
       },
       function (next) {
 
-        requestGithub('https://api.github.com/repos/' + repo, function (err, info) {
+        requestGithub('https://api.github.com/repos/' + repo, function (err, ret) {
+          info = ret;
           if (info.message) {
             err = new Error(info.message);
           } else if (!info.id) {
